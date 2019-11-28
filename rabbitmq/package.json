@@ -12,5 +12,8 @@
     "nodejs"
   ],
   "author": "André Santos",
-  "license": "ISC"
+  "license": "ISC",
+  "dependencies": {
+    "amqplib": "^0.5.5"
+  }
 }

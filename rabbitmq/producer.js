@@ -1,11 +1,9 @@
 var amqp = require('amqplib/callback_api');
 
 //URL na variável de ambiente
-//set AMQP_URL=amqp://usuario:senha@servidor/vhost
+//set CLOUDAMQP_URL=amqp://usuario:senha@servidor/vhost
 
-console.log(process.env.AMQP_URL);
-
-amqp.connect(process.env.AMQP_URL, function(error0, connection) {
+amqp.connect(process.env.CLOUDAMQP_URL, function(error0, connection) {
   if (error0) {
     throw error0;
   }
@@ -14,7 +12,11 @@ amqp.connect(process.env.AMQP_URL, function(error0, connection) {
       throw error1;
     }
     var queue = 'queue01';
-    var msg = 'Hello world';
+	var msg = process.argv.slice(2).join(" ");
+
+	if (!msg) {
+		msg = 'Hello world';
+	}
 
     channel.assertQueue(queue, {
       durable: true
@@ -23,4 +25,6 @@ amqp.connect(process.env.AMQP_URL, function(error0, connection) {
     channel.sendToQueue(queue, Buffer.from(msg));
     console.log(" [x] Sent %s", msg);
   });
+
+	setTimeout(function () { connection.close(); process.exit(0) }, 500);
 });

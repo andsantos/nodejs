@@ -1,7 +1,9 @@
 
 var amqp = require('amqplib/callback_api');
 
-amqp.connect(process.env.AMQP_URL, function(error0, connection) {
+console.log(process.env.CLOUDAMQP_URL);
+
+amqp.connect(process.env.CLOUDAMQP_URL, function(error0, connection) {
     if (error0) {
         throw error0;
     }
